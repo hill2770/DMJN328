@@ -1,20 +1,25 @@
-packages <- c("devtools", "dplyr", "foreign")
-if (length(setdiff(packages, rownames(installed.packages()))) > 0) {
-  install.packages(setdiff(packages, rownames(installed.packages())))  
-}
-
-library(foreign)
-library(dplyr)
-
-
 temp <- tempfile()
 unzip("data/SHR76_16.sav.zip", exdir="data", overwrite=T)
 unlink(temp)
 
+## If you don't have foreign yet installed, uncomment and run the line below
 
+install.packages("foreign")
+library(foreign)
 data_labels <- read.spss("data/SHR76_16.sav", to.data.frame=TRUE)
+
+View(data_labels)
+
 data_only <- read.spss("data/SHR76_16.sav", to.data.frame=TRUE, use.value.labels=F)
 
+
+View(data_labels)
+
+
+library(dplyr)
+
+## OK, we're keeping ID, CNTYFIPS, Ori, State, Agency, and AGENCY_A columns
+## And we're going to rename the other ones so that we know they're labels
 
 new_labels <- select(data_labels,
                      ID, CNTYFIPS, Ori, State, Agency, AGENCY_A,
@@ -63,11 +68,11 @@ new_data_only <- select(data_only,
 
 # cbind() means column binding-- it only works if the number of rows are the same
 
-murders <- cbind(new_labels, new_data_only)
+new_data <- cbind(new_labels, new_data_only)
 
 # Now we're going to use the select() function to reorder the columns so labels and values are next to each other
 
-murders <- select(murders,
+new_data <- select(new_data,
                    ID, CNTYFIPS, Ori, State, Agency, AGENCY_A,
                    Agentype_label, Agentype_value,
                    Source_label, Source_value,
@@ -96,6 +101,5 @@ rm(data_labels)
 rm(data_only)
 rm(new_labels)
 rm(new_data_only)
-rm(packages)
-rm(temp)
-file.remove("data/SHR76_16.sav")
+
+View(new_data)
