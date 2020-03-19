@@ -34,15 +34,22 @@ ggplot(hamilton2, aes(geometry=geometry, fill=TotalBA))+geom_sf()
 
 
 #Male and Female
-hamilton3 <- get_census(dataset='CA16', regions=list(CD="3525"), vectors=c("v_CA16_5081", "v_CA16_5082","v_CA16_5083"), labels="detailed", geo_format="sf", level='DA')
+hamilton3 <- get_census(dataset='CA16', regions=list(CD="3525"), vectors=c("v_CA16_5081", "v_CA16_5082","v_CA16_5083"), labels="detailed", geo_format="sf", level='CT')
 names(hamilton3)
 
-hamilton4 <- rename (hamilton3, "TotalBA"="v_CA16_5081: Bachelor's degree", "FemaleBA"= "v_CA16_5083: Bachelor's degree", "MaleBA"="v_CA16_5082: Bachelor's degree")
+hamilton4 <- rename (hamilton3, "TotalBA"="v_CA16_5081: Bachelor's degree", "Female"= "v_CA16_5083: Bachelor's degree", "Male"="v_CA16_5082: Bachelor's degree")
 names(hamilton4)
 
 ggplot(hamilton4, aes(geometry=geometry, fill=TotalBA)) +geom_sf()
 
-hamilton5 <- gather(hamilton4, Sex, n, FemaleBA, MaleBA)
+hamilton5 <- gather(hamilton4, Sex, Number, Female, Male)
 
+library(viridis)
 
+ggplot(hamilton5, aes(geometry=geometry, fill=Number)) +
+  geom_sf() +
+  facet_wrap(~Sex)+
+  scale_fill_gradient(low="darkblue", high="red")+
+  theme_minimal()+
+  theme(text=element_text(size=16, family="Calibri Light"))
 
