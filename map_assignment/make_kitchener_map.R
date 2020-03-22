@@ -64,4 +64,6 @@ kitchener6 %>%
 kitchener7 %>% 
   gather(Sex, n, males, females)-> kitchener8
 
-ggplot(kitchener8, aes(geometry=geometry, fill=n))+facet_wrap(~Sex)+geom_sf()
+ggplot(kitchener8, aes(geometry=geometry, fill=n))+facet_wrap(~Sex)+geom_sf()+scale_fill_gradient(low="firebrick1", high="firebrick4")
+  scale_fill_distiller(palette="PuBuGn", aesthetics="fill", direction=1)
+

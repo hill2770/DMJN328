@@ -16,13 +16,13 @@ knitr::opts_chunk$set(echo = TRUE, results='markup', out.width="75%", eval=T, me
 # Understanding The Hierarchical Nature of Statistics Canada Data
 As I mentioned in class the other data, Statistics CAnada has a systematic - but complex - way of categorizing its data based on geographic areas. It is hierarchical in nature, so data is aggregated into a variety of levels. 
 
-One way is: 
+One way is:
 
 1. (PR) Province
 
-2. (CD) Census District (or Division, I've seen both) 
+2. (CD) Census District (or Division, I've seen both)
 
-> "Group of neighbouring municipalities joined together for the purposes of regional planning and managing common services (such as police or ambulance services). These groupings are established under laws in effect in certain provinces of Canada. Census division (CD) is the general term for provincially legislated areas (such as county, municipalité régionale de comté and regional district) or their equivalents." 
+> "Group of neighbouring municipalities joined together for the purposes of regional planning and managing common services (such as police or ambulance services). These groupings are established under laws in effect in certain provinces of Canada. Census division (CD) is the general term for provincially legislated areas (such as county, municipalité régionale de comté and regional district) or their equivalents."
 `r tufte::quote_footer('--- [Statistics Canada](https://www12.statcan.gc.ca/census-recensement/2016/ref/dict/geo008-eng.cfm)')`
 
 3. Census Subdivision (CSD)
@@ -34,25 +34,25 @@ One way is:
 
 5. Dissemination Areas (DA)
 
-> "A dissemination area (DA) is a small, relatively stable geographic unit composed of one or more adjacent dissemination blocks. It is the smallest standard geographic area for which all census data are disseminated. DAs cover all the territory of Canada." 
+> "A dissemination area (DA) is a small, relatively stable geographic unit composed of one or more adjacent dissemination blocks. It is the smallest standard geographic area for which all census data are disseminated. DAs cover all the territory of Canada."
 `r tufte::quote_footer('--- [Statistics Canada](https://www150.statcan.gc.ca/n1/pub/92-195-x/2011001/geo/da-ad/def-eng.htm)')`
 
-In addition, there are other categories that reflect a parallel hierarchy. Probably the most important of these are: Census Metropolitan Areas and Census Agglomerations. 
+In addition, there are other categories that reflect a parallel hierarchy. Probably the most important of these are: Census Metropolitan Areas and Census Agglomerations.
 
-> "Area consisting of one or more neighbouring municipalities situated around a core. A census metropolitan area must have a total population of at least 100,000 of which 50,000 or more live in the core. A census agglomeration must have a core population of at least 10,000." 
+> "Area consisting of one or more neighbouring municipalities situated around a core. A census metropolitan area must have a total population of at least 100,000 of which 50,000 or more live in the core. A census agglomeration must have a core population of at least 10,000."
 `r tufte::quote_footer('--- [Statistics Canada](https://www12.statcan.gc.ca/census-recensement/2011/ref/dict/geo009-eng.cfm)')`
 
 
 # Geographic Files and Data Files
-As well, the other thing to keep in mind is that we need to get geography files, usually `.shp` file extension, that contain information about each boundary and an identifier. When you look at `.shp` files, you'll see that each subdivision in the file that you download will have also has variables that identify which geographic area (Census Tract, Census Subdivision, Census Division) that the boundary belongs to. 
+As well, the other thing to keep in mind is that we need to get geography files, usually `.shp` file extension, that contain information about each boundary and an identifier. When you look at `.shp` files, you'll see that each subdivision in the file that you download will have also has variables that identify which geographic area (Census Tract, Census Subdivision, Census Division) that the boundary belongs to.
 
-This allows for merging to add data to geography files. 
+This allows for merging to add data to geography files.
 
-*Data files* can come from anywhere, but the `cancensus` r package makes it very easy to get both the geography and the data file at once. However, you are welcome to take data file from anywhere. The key thing to remember is that the data you get must somehow have geography identifiers that match up with the geography file that you have downloaded. 
+*Data files* can come from anywhere, but the `cancensus` r package makes it very easy to get both the geography and the data file at once. However, you are welcome to take data file from anywhere. The key thing to remember is that the data you get must somehow have geography identifiers that match up with the geography file that you have downloaded.
 
 # Getting a folder for your map assignment
 
-As with everything in this course, it is very useful to set up a folder with an RStudio project folder specifically for your map assignment. I have already actually created one on the course GitHub page. If you are able to to pull changes from the DMJN328 course page in GitHub, by following the instructions [here](https://github.com/sjkiss/DMJN328/raw/master/Using_github/syncing_to_course_repository.pdf), then you should see a folder called "map assignment" in your course folder (see Figure \@ref(fig:map)). 
+As with everything in this course, it is very useful to set up a folder with an RStudio project folder specifically for your map assignment. I have already actually created one on the course GitHub page. If you are able to to pull changes from the DMJN328 course page in GitHub, by following the instructions [here](https://github.com/sjkiss/DMJN328/raw/master/Using_github/syncing_to_course_repository.pdf), then you should see a folder called "map assignment" in your course folder (see Figure \@ref(fig:map)).
 
 
 
@@ -237,7 +237,8 @@ include_graphics("images/selecting_dissemination_areas.png")
 Then go back to overview. If you look at the bottom, there is some R code there and it should look just like this.
 
 ```{r r-code, eval=F, tidy=T}
-census_data <- get_census(dataset='CA16', regions=list(CSD="3530013"), vectors=c(), labels="detailed", geo_format=NA, level='DA')
+census_data <- get_census(dataset='CA16', regions=list(CSD="3530013"), 
+                          vectors=c(), labels="detailed", geo_format=NA, level='DA')
 ```
 
 I am going to modify it slightly and comment it so we know what is going on.
@@ -341,7 +342,8 @@ Go back to the `Overview` screen and you'll see R code again. It should look lik
 
 
 ```{r dummy-variable-data, eval=F, tidy=T}
-census_data <- get_census(dataset='CA16', regions=list(CSD="3530013"), vectors=c("v_CA16_4"), labels="detailed", geo_format=NA, level='DA')
+census_data <- get_census(dataset='CA16', regions=list(CSD="3530013"), 
+                          vectors=c("v_CA16_4"), labels="detailed", geo_format=NA, level='DA')
 
 ```
 
@@ -414,7 +416,7 @@ kitchener4<-mutate(kitchener3, percent=(Toddlers/Population)*100)
 kitchener4<-kitchener3 %>%
   mutate(percent=(Toddlers/Population*100))
 #option 2a with pipes
-kitchener3 %>% 
+kitchener3 %>%
   mutate(percent=(Toddlers/Population)*100)->kitchener4
 ```
 
@@ -436,7 +438,7 @@ The only variable that is almost always crosstabbed is sex. So we can always go 
 The R code looks like this. Note this is the exact code to download the Kitchener data as above. I've just changed the vector numbers and saved this in `kitchener5`
 
 ```{r, eval=T, results="hide", echo=T, tidy=T}
-kitchener5 <- get_census(dataset='CA16', regions=list(CSD="3530013"), vectors=c("v_CA16_9","v_CA16_8"), 
+kitchener5 <- get_census(dataset='CA16', regions=list(CSD="3530013"), vectors=c("v_CA16_9","v_CA16_8"),
 labels="detailed", geo_format="sf", level='DA')
 ```
 Note, how we're getting two new vectors.
@@ -502,35 +504,87 @@ ggplot(kitchener7, aes(geometry=geometry, fill=n))+
   geom_sf()+
   facet_wrap(~Sex)
 ```
+## Colours
+It's pretty easy to change colours on maps. One way is to use the function `scale_fill_gradient()` to your graph. It takes a `low` and a `high` argument that are R colours. You can find a full list of R colours [here](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf). here are two examples.
+
+```{r scale-fill-radient, echo=T, eval=T}
+ggplot(kitchener7, aes(geometry=geometry, fill=n))+
+  geom_sf()+
+  facet_wrap(~Sex)+scale_fill_gradient(low="firebrick1", high="firebrick4")
+
+ggplot(kitchener7, aes(geometry=geometry, fill=n))+
+  geom_sf()+
+  facet_wrap(~Sex)+scale_fill_gradient(low="darkblue", high="lightgreen")
+
+```
+
+Another way to do it is to use the command `scale_fill_distiller()`. It uses a really neat website [(http://colorbrewer2.org)](http://colorbrewer2.org) that is built to provide pre-built color palettes for maps.
+
+It's useful to look at the help page for it:
+
+```{r help-distiller, results="hide", echo=T, eval=F}
+?scale_fill_distiller()
+```
+
+There you'll read that that there are three different tyupes of colour palettes:
+1. sequential, that goes from a low to a high value
+2. diverging, that goes from a medium value to a high and a low value in opposite directions
+3. qualitative that doesn't use a gradient, but selects categorically different colours for different levels of the data in yoru maps.
+
+If you read further down in the help documentation you'll see the pre-built palettes that are provided.
+
+For example:
+
+```{r show-palettes}
+ggplot(kitchener7, aes(geometry=geometry, fill=n))+
+  geom_sf()+
+  facet_wrap(~Sex)+scale_fill_distiller(palette="Spectral")
+```
+
+Or:
+
+```{r show-palettes-oranges}
+ggplot(kitchener7, aes(geometry=geometry, fill=n))+
+  geom_sf()+
+  facet_wrap(~Sex)+scale_fill_distiller(palette="Oranges")
+```
+
+Remember, in the online course, Andrew Ba Tran had us fiddle with the direction argument. By setting the `direction=1` you make the dark colours correspond to high values, which is more intuitive. It's a useful thing to use.
+
+
+```{r show-palettes-directions}
+ggplot(kitchener7, aes(geometry=geometry, fill=n))+
+  geom_sf()+
+  facet_wrap(~Sex)+scale_fill_distiller(palette="Oranges", direction=1)
+```
 ## Other Sources of Geographical Data
 
-The census is not the only source of data out there, not by a long shot. Statistics Canada does a lot of other surveys, some of the students have encountered these. The major issue with those is that Statistics Canada does not publish results down to the very narrow geographical areas that we played with above. 
+The census is not the only source of data out there, not by a long shot. Statistics Canada does a lot of other surveys, some of the students have encountered these. The major issue with those is that Statistics Canada does not publish results down to the very narrow geographical areas that we played with above.
 
-A way to search for some of these is to go to Statistids Canada'as Cansim website, through the Laurier library (see Figure \@ref(fig:cansim)). 
+A way to search for some of these is to go to Statistids Canada'as Cansim website, through the Laurier library (see Figure \@ref(fig:cansim)).
 
 ```{r cansim, echo=F, fig.cap="Finding Cansim"}
-include_graphics("images/library_cansim.png") 
+include_graphics("images/library_cansim.png")
 ```
 
 From there, select "Cansim" (See Figure \@ref(fig:cansim2) )
 
 ```{r cansim2, echo=F, fig.cap="Finding Cansim"}
-include_graphics("images/cansim.png") 
+include_graphics("images/cansim.png")
 ```
 
-If you look on the left, you can filter the vasta array of cansim datasets by geography (see Figure  \@ref(fig:geography)) . The number on the right of each category refers to the number of data products available for each geographical level. So there are over 2,000 tables at the provincial level, 532 at the Census Metropolitan Level, 158 at the Census Division level (e.g. regional municipalities), 115 at the Census Subdivision level only 18 that publish data at the census tract level and only 7 at the dissemination level. 
+If you look on the left, you can filter the vasta array of cansim datasets by geography (see Figure  \@ref(fig:geography)) . The number on the right of each category refers to the number of data products available for each geographical level. So there are over 2,000 tables at the provincial level, 532 at the Census Metropolitan Level, 158 at the Census Division level (e.g. regional municipalities), 115 at the Census Subdivision level only 18 that publish data at the census tract level and only 7 at the dissemination level.
 
 ```{r geography, echo=F, fig.cap="Statistics Canada's Geographical Data sets"}
-include_graphics("images/cansim_geographic_areas.png") 
+include_graphics("images/cansim_geographic_areas.png")
 ```
 
-So, this route presents a couple of options:First, you can just browse the different tables at different geographical levels to find something interesting. Then you can get the boundary files (without vectors of variables!!) from Census Mapper and then combine them. 
+So, this route presents a couple of options:First, you can just browse the different tables at different geographical levels to find something interesting. Then you can get the boundary files (without vectors of variables!!) from Census Mapper and then combine them.
 
 ### A note on Federal Electoral Districts
 
-Federal Electoral District boundary files are not available through Census Mapper. However, they (and all the census boundary files) are available [here](https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm). So that could be super interesting to combine those with some of the data that appears to be published by STatistics Canada above. 
+Federal Electoral District boundary files are not available through Census Mapper. However, they (and all the census boundary files) are available [here](https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-eng.cfm). So that could be super interesting to combine those with some of the data that appears to be published by STatistics Canada above.
 
-one way that Statistics CAnada makes things easy for people is that each FED will have a unique number associated with it that is used by Elections Canada and by Statistics Canada to facilitate merging. 
-
+one way that Statistics CAnada makes things easy for people is that each FED will have a unique number associated with it that is used by Elections Canada and by Statistics Canada to facilitate merging.
 
 
