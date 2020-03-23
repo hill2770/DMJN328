@@ -48,7 +48,7 @@ A: Remarkably well when a sample is random (probabilistic) and large enough
      * Snowball sampling (for hard to reach populations )
      
 # The Central Limit Theorem
-> The distribution of sample means, *drawn randomly*,  approximates a normal distributions, regardless of the distribution of the underlying sample, as the sample gets larger.
+> The distribution of sample means, *drawn randomly*,  approximates a normal distributions, regardless of the distribution of the underlying population, as the sample gets larger.
 
 * With a sufficiently large sample size, the average of a sample will reliably approach the average of the population
 
