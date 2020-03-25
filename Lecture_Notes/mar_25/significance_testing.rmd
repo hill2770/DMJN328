@@ -24,7 +24,7 @@ $$ \Pr{(A)} \times 100 $$
 
 # Did An Earlier Closing Time Reduce Assaults
 
-```{r closing-time, echo=F, fig.cap="Figure from course text, p. 40, 'Did the policy work'"}
+```{r closing-time, echo=F, fig.cap="Figure from course text, p. 40, 'Did the policy work'", purl=F}
 include_graphics("policy.png")
 ```
 
@@ -58,7 +58,9 @@ save(census_2016, file="../mar_23/data/census_2016.rdata")
 ```
 
 ```{r read-in-data, eval=F}
-#load(url("https://github.com/sjkiss/DMJN328/raw/master/Lecture_Notes/mar_23/data/census_2016.rdata"))
+## This might take a few minutes!!
+
+load(url("https://github.com/sjkiss/DMJN328/raw/master/Lecture_Notes/mar_23/data/census_2016.rdata"))
 
 ```
 # Chance
@@ -150,7 +152,7 @@ df %>%
 
 # Chance
 ## Sample v. Population
-```{r errors, echo=F}
+```{r errors, echo=F, purl=F}
 include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/errors_pregnant.jpg")
 ```
 
@@ -216,7 +218,7 @@ Major problems with null hypothesis significance testing
 
 1. Results do not tell us if our finding is *true*
     * They tell is if our sample data is unlikely if we assumed the null hypothesis is true.
-```{r sig1, out.width="75%", echo=F}
+```{r sig1, out.width="75%", echo=F, purl=F}
 
 include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/xkcd.png")
 ```
@@ -238,7 +240,7 @@ Major problems with null hypothesis significance testing
      * Some evidence that there is a suspiciously, abnormal number of studies published with p-values of 0.05^[Ginsel, Bastiaan, Abhinav Aggarwal, Wei Xuan, and Ian Harris. 2015. “The Distribution of Probability Values in Medical Abstracts: An Observational Study.” BMC Research Notes 8 (1): 721. https://doi.org/10.1186/s13104-015-1691-x.
 ]
      
-```{r include-p-values-plot, fig.cap="Distribution of p-values in medical literature", echo=F, out.width="50%", out.height="50%"}
+```{r include-p-values-plot, fig.cap="Distribution of p-values in medical literature", echo=F, out.width="50%", out.height="50%", purl=F}
 include_graphics("p-values.png")
 ```
 
@@ -300,7 +302,7 @@ Major problems with null hypothesis significance testing
 Major problems with null hypothesis significance testing
 
 4. Nobody likes a story with nothing to tell
-```{r sig2, echo=F}
+```{r sig2, echo=F, purl=F}
 include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/xkcd_significance.png")
 ```
 
