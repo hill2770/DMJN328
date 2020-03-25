@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "P-Values and Statistical Significance"
 author: "Simon J. Kiss"
 date: "24/03/2020"
 output: slidy_presentation
@@ -7,6 +7,7 @@ output: slidy_presentation
 
 ```{r setup, include=FALSE,purl=F ,echo=F, results="hide"}
 library(knitr)
+library(tidyverse)
 knit_hooks$set(purl = hook_purl)
 opts_template$set(nopurl = list(purl=FALSE))
 knitr::opts_chunk$set(echo = TRUE, cache=T, message=F, warning=F, fig.width=4, fig.height=3)
@@ -16,34 +17,199 @@ options(knitr.duplicate.label = 'allow')
 
 # Terminology
 1. Probability
-     * $\Pr{(A)}=\frac{A}{Total} $
+     $$\Pr{(A)}=\frac{A}{Total} $$
 2. Odds
-    * $ Odds(A) = \frac{A}{Total- A} $
+    $$ Odds(A) = \frac{A}{Total- A} $$
 3. Percentage chance
-    * Probability * 100
+    $$ \Pr{A}* 100 $$
 
-# Possible Explanations
-1. Chance
-2. Correlation
-3. Other explanations
+# Did An Earlier Closing Time Reduce Assaults
 
-# Luck
+```{r closing-time, echo=F}
+include_graphics("policy.png")
+```
 
-```{r read-in-data, cache=T}
+# Did An Earlier Closing Time Reduce Assaults
 
+There are three possible explanations for the drop in results.
+
+1. Chance (ranom variation) 
+2. Correlation 
+3. Other explanations 
+
+# Chance
+
+How do we rule out chance?
+    * Null hypothesis significance testing
+    * dominant method of statistical inference in science
+    * This is what you would see reading empirical studies in medicine, psychology, media studies, everywhere...
+
+# Chance
+
+How do we rule out chance?
+* Read in the census data
+
+```{r read-in-data, eval=T,cache=T}
 load(url("https://github.com/sjkiss/DMJN328/raw/master/Lecture_Notes/mar_23/data/census_2016.rdata"))
 
 ```
 
-# Luck
-```{r}
-library(labelled)
-look_for(census_2016, "education")
-census_2016$Sex
+```{r recode-data, eval=T, echo=F}
+
 census_2016 %>% 
-  select(Wages, SEX)->df
-df %>% 
-  group_by(as_factor(HDGREE))
-df$HDGREE
+  mutate(degree=case_when(
+    HDGREE < 9 ~ "no degree",
+    HDGREE > 8 & HDGREE<14 ~ "degree",
+ TRUE ~ NA_character_    
+  )) %>% 
+  mutate(degree=factor(degree, levels=c('no degree', 'degree')))->census_2016
+
+
+```
+# Chance
+Calculate Average Salaries by degree
+
+```{r show-averages}
+#start with data frame
+census_2016 %>% 
+  #groupby degree
+  group_by(degree) %>% 
+  #summarize average
+  summarize(avg=mean(Wages, na.rm=T))
+```
+# Chance
+## Sample v. Population
+
+* Sample clearly shows a difference; but does that difference exist in the population?
+
+```{r errors, echo=F}
+include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/errors_pregnant.jpg")
 ```
 
+# Chance
+## Sample v. Population
+* Even large samples generate fluky results (i.e. false positives)
+
+# Chance
+## Null Hypothesis Significance Testing
+
+* Formalize a hypothesis that these results are result of chance and a hypothesis that these are not.
+
+| Hypothesis | Statement |
+|:---------------------------:|:----------------------|
+| $$ H_0 $$ |There is no relationship between level of education and wages.| 
+| $$ H_1 $$  |Wages for people with degrees are higher than for people without degrees |
+
+# Chance
+# Null Hypothesis Significance Testing
+* Compare the results we get with the distribution of results we would get if $$ H_0 $$ were true.
+* If the probability of getting your data is less than some cutoff, usually 0.05, the findings are rejected.
+* Why 0.05?
+     * Arbitrary
+     * Under the normal distribution, only 5% of cases are above or below two standard deviations away
+* 0.1 and 0.01 are other common thresholds
+* Turns out, when you compare the averages of two groups, the results have a *distribution* that is very close to the normal distribution, it's called the t-distribution. 
+
+# Chance
+## Null Hypothesis Significance Testing
+
+```{r show-density-plots, echo=F}
+out<-data.frame(t=rt(5000, df=156579))
+
+out %>% 
+  ggplot(., aes(x=t))+geom_histogram(aes(y=..density..), alpha=0.2)+scale_x_continuous(breaks=seq(-3,3,1))+theme_bw()+labs(title="The t-distribution")
+```
+
+# Chance
+## Null Hypothesis Significance Testing
+```{r run-t-test}
+t.test(Wages ~ degree, census_2016)
+
+```
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+1. Results do not tell us if our finding is *true*
+    * They tell is if our sample data is unlikely if we assumed the null hypothesis is true.
+```{r sig1, out.width="75%", echo=F}
+
+include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/xkcd.png")
+```
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+2. Findings are accepted based on a discrete threshold, but p-values are continuous
+     * what should a scientist do with a p-value of 0.06?
+     * Standard procedure is that the study is published as if it were *true*
+     * more nuanced response would be to appreciate that the evidence is close to conventional rules for accepting findings as true
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+3. Statistical significance is not *clinical* significance
+     * a small effect can have a very small p-value
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Ignores the prior probability of the various hypotheses
+     * Case of Sally Clark ^[http://nautil.us/issue/74/networks/the-flawed-reasoning-behind-the-replication-crisis]
+     * Gave birth to a baby boy, who died at 11 weeks
+     * Gave birth to a nother baby boy the next year who died at 8 weeks
+     * In a trial, a pediatrician calculated the odds of two babies dying consecutively of SIDS as 1 in 73 million 
+     * Convicted as a double-child murderer
+     
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Ignores the prior probability of the various hypotheses
+    * Classic logic of NHST
+
+| Hypothesis | Statement |
+|:---------------------------:|:----------------------|
+| $$ H_0 $$ |Sally did not kill her babies (they died of SIDS)| 
+| $$ H_1 $$  |Sally did kill her babies|
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Ignores the prior probability of the various hypotheses
+    * Classic logic of NHST
+    * The probability of getting data (two babies dead) assuming the null is true, is vanishingly small. Ergo $$H_0$ is not true, ergo, guilty.
+    * But the probability of a mother killing her own child is *also* extremely low, let alone killing her own.
+    * So if you start with the expectation that it is unlikely that a mother would kill her own child (which is true), then the probability that the null hypothesis is true starts to look a lot larger.
+
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Nobody likes a story with nothing to tell
+     * Null findings are not published
+     * Phenomenon is known as publication bias (or file drawer effect)^[https://blogs.scientificamerican.com/observations/were-incentivizing-bad-science/]
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Nobody likes a story with nothing to tell
+```{r sig2, echo=F}
+include_graphics("https://raw.githubusercontent.com/sjkiss/Images/master/xkcd_significance.png")
+```
+
+# Chance
+## Null Hypothesis Significance Testing
+Major problems with null hypothesis significance testing
+
+4. Nobody likes a story with nothing to tell
+    * Loop back to the importance of prior probabilities
+    * If you know that scientists tend to only publish positive findings, how should you interpret a very small p-value? 
+    * We should treat it skeptically because the likelihood is at least somewhat high that it is a false positive, even though the small p-value is supposed to minimize the chances of that.
