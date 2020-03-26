@@ -40,6 +40,7 @@ ggplot(hamilton4, aes(geometry=geometry, fill=TotalBA)) +geom_sf()
 
 hamilton5 <- gather(hamilton4, Sex, Number, Female, Male)
 
+#FinalPlot
 ggplot(hamilton5, aes(geometry=geometry, fill=Number)) +
   geom_sf()+
   facet_wrap(~Sex)+
