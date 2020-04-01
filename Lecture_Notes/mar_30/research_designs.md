@@ -17,7 +17,7 @@ date: March 30, 2020
 <img src="/Users/skiss/OneDrive - Wilfrid Laurier University/Courses/DMJN328/Lecture_Notes/mar_30/images/drop.png" style="zoom:50%;"/>  
 
 # Correlation
-Correlation does not = causation, but causation always is necessary for causation. 
+Correlation does not = causation, but correlation always is necessary for causation. 
 
 !["Correlation doesn't imply causation, but it does waggle its eyebrows suggestively and gesture furtively while mouthing 'look over there';"](/Users/skiss/OneDrive - Wilfrid Laurier University/Courses/DMJN328/Lecture_Notes/mar_30/images/xkcd.png)
 
@@ -43,10 +43,10 @@ Correlation does not = causation, but causation always is necessary for causatio
 # Research designs
 ## Cross-sectional
 > Researchers find fewer depressive symptoms in dark-chocolate eaters
-> > Out of 13,000 people they surveyed, about 7.6 per cent overall said they felt depressive symptoms, while only 1.5 per cent of chocolate-eaters in that group reported feeling those symptoms.
-[Source: CTV News](https://www.ctvnews.ca/lifestyle/researchers-find-fewer-depressive-symptoms-in-dark-chocolate-eaters-1.4532678)
+> Out of 13,000 people they surveyed, about 7.6 per cent overall said they felt depressive symptoms, while only 1.5 per cent of chocolate-eaters in that group reported feeling those symptoms.
+[Source: CTV News](https://www.ctvnews.ca/lifestyle/researchers-find-fewer-depressive-symptoms-in-dark-chocolate-eaters-1.4532678)[^2]
 
-![Jackson et al, 2019](https://onlinelibrary.wiley.com/doi/abs/10.1002/da.22950)
+[^2]: [Jackson, Sarah E., Lee Smith, Joseph Firth, Igor Grabovac, Pinar Soysal, Ai Koyanagi, Liang Hu, Brendon Stubbs, Jacopo Demurtas, and Nicola Veronese. 2019. “Is There a Relationship between Chocolate Consumption and Symptoms of Depression? A Cross-Sectional Survey of 13,626 US Adults.” *Depression and Anxiety* 36 (10): 987–995.](https://onlinelibrary.wiley.com/doi/abs/10.1002/da.22950)
 
 # Research designs
 ## Cross-sectional
@@ -74,6 +74,7 @@ Correlation does not = causation, but causation always is necessary for causatio
 ## Experiments
 
 Have their own problems. 
+
 1. hard to do for really interesting questions, expensive
     - How do you test the effects of poverty on future life happiness with an experiment
 2. Can you really replicate the real world in a lab?
@@ -89,11 +90,17 @@ There are some variations on experiments at a large scale
 
 # Research Designs
 ## Experiments
+There are some variations on experiments at a large scale
 
-Quasi-experiments are variations on experiments at a large scale
+1. Quasi-experiments are variations on experiments at a large scale
 
-- take advantage of natural variation in the world
-- the Richmond homicide example and the Hamilton pub closing time examples are great examples of these.
+     - take advantage of natural variation in the world
+     - the Richmond homicide example and the Hamilton pub closing time examples are great examples of these.
+
+![](/Users/skiss/OneDrive - Wilfrid Laurier University/Courses/DMJN328/Lecture_Notes/mar_30/images/hamilton_quasi_experiment.png)
+
+# Research Designs
+## Experiments
 - Williams (1986)[^1]
      - researchers studied the impact of the introduction of television on three remote communities
      - one had no television, two others did. 
