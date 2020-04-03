@@ -1,6 +1,6 @@
 #start my assignment here 
-
-install.packages('cancensus')
+#You can uncomment this line now that it is installed
+#install.packages('cancensus')
 library(cancensus)
 library(viridis)
 library(tidyverse)
@@ -54,4 +54,23 @@ ggplot(hamilton5, aes(geometry=geometry, fill=Number)) +
     panel.grid.minor = element_blank(),
     axis.text = element_blank())
  
+
+# Hi Jonnica, I think it might be useful to plot this as a percentage, rather than as the raw numbers. 
+# Great work!! I love the red and blue, it works as a great contrast!
+
+hamilton5 %>% 
+  mutate(percent=(Number/Population)*100) %>% 
+ggplot(., aes(geometry=geometry, fill=percent)) +
+  geom_sf()+
+  facet_wrap(~Sex)+
+  scale_fill_gradient(low="dodgerblue3", high="red")+
+  theme_minimal()+
+  #theme(text=element_text(size=16, family="Calibri Light"))+
+  labs(title="Hamilton Residents with Bachelor's Degrees", caption="Source: censusmapper.ca")+
+  theme(
+    panel.border = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    axis.text = element_blank())
+
 
